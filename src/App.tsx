@@ -8,8 +8,10 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import Login from "./pages/Login/Login";
+import Register from "./pages/Register/Register";
 
 // Define an atom
+/*
 const wordState = atom({
   key: "wordState", // unique ID (with respect to other atoms/selectors)
   default: "", // default value (aka initial value)
@@ -24,6 +26,7 @@ const WordChange = () => {
   }) => {
     setWord(event.target.value);
   };
+  
 
   return (
     <div>
@@ -36,13 +39,14 @@ const WordChange = () => {
     </div>
   );
 };
+*/
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route>
       <Route path="login" element={<Login />} />
-      <Route path="home" element={<WordChange />} />
-      <Route path="register" element={<div>Register</div>} />
+      <Route path="home" element={<div>Home</div>} />
+      <Route path="register" element={<Register />} />
       {/* ... etc. */}
 
       <Route path="*" element={<Navigate to="/login" />} />

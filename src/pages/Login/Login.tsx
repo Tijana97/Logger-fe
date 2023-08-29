@@ -2,18 +2,20 @@ import React, { useState, useEffect } from "react";
 import { TextField, Button, Grid } from "@mui/material";
 import axios from "axios";
 import { string } from "yup";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login: React.FC = (): JSX.Element => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const navigate = useNavigate();
 
   const [emailError, setEmailError] = useState<string | null>(null);
   const [passwordError, setPasswordError] = useState<string | null>(null);
 
   const [initialLoad, setInitialLoad] = useState<boolean>(true);
+  const [loginError, setLoginError] = useState<string | null>(null);
 
   const emailSchema = string().email().required();
-  const passwordSchema = string().required();
 
   useEffect(() => {
     const validateEmail = async () => {
@@ -26,19 +28,9 @@ const Login: React.FC = (): JSX.Element => {
     };
 
     validateEmail();
-  }, [email]);
+  }, [email, emailSchema]);
 
   useEffect(() => {
-    /*
-    const validatePassword = async () => {
-      try {
-        await passwordSchema.validate(password);
-        setPasswordError(null);
-      } catch (error: any) {
-        setPasswordError(error.message);
-      }
-    };*/
-
     const validateOnceMore = () => {
       const regex =
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!#%])[A-Za-z0-9!#%]{8,32}$/;
@@ -52,8 +44,6 @@ const Login: React.FC = (): JSX.Element => {
         );
       }
     };
-
-    //validatePassword();
     validateOnceMore();
   }, [password]);
 
@@ -68,8 +58,15 @@ const Login: React.FC = (): JSX.Element => {
 
         // Handle the response as needed
         console.log("Login successful!", response.data);
+        setLoginError(null);
+        const token = response.data.token;
+        axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+        localStorage.setItem("token", response.data.token);
+        console.log(response.data.token);
+        navigate("/home");
       } catch (error: any) {
         console.error("Login failed:", error);
+        setLoginError("Login failed. Username or password are incorrect.");
       }
     }
   };
@@ -105,10 +102,23 @@ const Login: React.FC = (): JSX.Element => {
           helperText={!initialLoad ? passwordError : " "}
         />
       </Grid>
+      {loginError && (
+        <Grid item xs={12}>
+          <p style={{ color: "red" }}>{loginError}</p>
+        </Grid>
+      )}
+
       <Grid item xs={12}>
-        <Button variant="contained" color="primary" onClick={handleLogin}>
-          Login
-        </Button>
+        <div style={{ display: "flex", gap: "16px" }}>
+          <Button variant="contained" color="primary" onClick={handleLogin}>
+            Login
+          </Button>
+          <Link to="/register">
+            <Button variant="contained" color="primary">
+              Register
+            </Button>
+          </Link>
+        </div>
       </Grid>
     </Grid>
   );
