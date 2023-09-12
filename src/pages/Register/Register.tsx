@@ -1,12 +1,24 @@
 import React, { useState, useEffect } from "react";
-import { TextField, Button, Grid } from "@mui/material";
+import {
+  TextField,
+  Button,
+  Grid,
+  Paper,
+  CssBaseline,
+  Box,
+  Typography,
+  Container,
+  Link,
+} from "@mui/material";
 import axios from "axios";
 import { string } from "yup";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import LoggerImage from "../../utils/images/Logger.png";
 
 const Register: React.FC = (): JSX.Element => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  document.body.style.backgroundColor = "#009696";
 
   const [emailError, setEmailError] = useState<string | null>(null);
   const [passwordError, setPasswordError] = useState<string | null>(null);
@@ -124,104 +136,197 @@ const Register: React.FC = (): JSX.Element => {
       } catch (error: any) {
         console.error("Registration failed:", error);
         setRegisterError(
-          "Email ypu selected already exists in the database. Log in or use a different email for registration."
+          "Email you selected already exists in the database. Log in or use a different email for registration."
         );
       }
     }
   };
 
   return (
-    <Grid container spacing={2}>
-      <Grid item xs={12}>
-        <TextField
-          label="Name"
-          variant="outlined"
-          fullWidth
-          value={name}
-          onChange={(e) => {
-            setName(e.target.value);
-            setInitialLoad(false);
+    <div
+      style={{
+        backgroundColor: "#009696",
+      }}
+    >
+      <Container component="main" maxWidth="lg">
+        <Box
+          sx={{
+            marginTop: 8,
+            marginBottom: 0,
           }}
-          error={!!nameError && !initialLoad}
-          helperText={!initialLoad ? nameError : " "}
-        />
-      </Grid>
-      <Grid item xs={12}>
-        <TextField
-          label="Surname"
-          variant="outlined"
-          fullWidth
-          value={surname}
-          onChange={(e) => {
-            setSurname(e.target.value);
-            setInitialLoad(false);
-          }}
-          error={!!surnameError && !initialLoad}
-          helperText={!initialLoad ? surnameError : " "}
-        />
-      </Grid>
-      <Grid item xs={12}>
-        <TextField
-          label="Email"
-          variant="outlined"
-          fullWidth
-          value={email}
-          onChange={(e) => {
-            setEmail(e.target.value);
-            setInitialLoad(false);
-          }}
-          error={!!emailError && !initialLoad}
-          helperText={!initialLoad ? emailError : " "}
-        />
-      </Grid>
-      <Grid item xs={12}>
-        <TextField
-          label="Password"
-          variant="outlined"
-          type="password"
-          fullWidth
-          value={password}
-          onChange={(e) => {
-            setPassword(e.target.value);
-            setInitialLoad(false);
-          }}
-          error={!!passwordError && !initialLoad}
-          helperText={!initialLoad ? passwordError : " "}
-        />
-      </Grid>
-      <Grid item xs={12}>
-        <TextField
-          label="RepeatPassword"
-          variant="outlined"
-          type="password"
-          fullWidth
-          value={repeatPassword}
-          onChange={(e) => {
-            setRepeatPassword(e.target.value);
-            setInitialLoad(false);
-          }}
-          error={!!repeatPasswordError && !initialLoad}
-          helperText={!initialLoad ? repeatPasswordError : " "}
-        />
-      </Grid>
-      {registerError && (
-        <Grid item xs={12}>
-          <p style={{ color: "red" }}>{registerError}</p>
-        </Grid>
-      )}
-      <Grid item xs={12}>
-        <div style={{ display: "flex", gap: "16px" }}>
-          <Button variant="contained" color="primary" onClick={handleRegister}>
-            Register
-          </Button>
-          <Link to="/login">
-            <Button variant="contained" color="primary">
-              Login
-            </Button>
-          </Link>
-        </div>
-      </Grid>
-    </Grid>
+        >
+          <Grid container>
+            <CssBaseline />
+            <Grid
+              item
+              xs={false}
+              sm={4}
+              md={7}
+              sx={{
+                backgroundImage: `url(${LoggerImage})`,
+                backgroundRepeat: "no-repeat",
+                backgroundColor: (t) =>
+                  t.palette.mode === "light"
+                    ? t.palette.grey[50]
+                    : t.palette.grey[900],
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+              }}
+            />
+            <Grid
+              item
+              xs={12}
+              sm={8}
+              md={5}
+              component={Paper}
+              elevation={6}
+              square
+            >
+              <Box
+                sx={{
+                  my: 8,
+                  mx: 4,
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
+                <Typography component="h1" variant="h5">
+                  Sign in
+                </Typography>
+                <Box component="form" sx={{ mt: 1 }}>
+                  <TextField
+                    label="Name"
+                    variant="outlined"
+                    fullWidth
+                    value={name}
+                    onChange={(e) => {
+                      setName(e.target.value);
+                      setInitialLoad(false);
+                    }}
+                    error={!!nameError && !initialLoad}
+                    helperText={
+                      !initialLoad ? (
+                        <div style={{ height: "30px" }}>{nameError}</div>
+                      ) : (
+                        " "
+                      )
+                    }
+                  />
+                  <TextField
+                    label="Surname"
+                    variant="outlined"
+                    fullWidth
+                    value={surname}
+                    onChange={(e) => {
+                      setSurname(e.target.value);
+                      setInitialLoad(false);
+                    }}
+                    error={!!surnameError && !initialLoad}
+                    helperText={
+                      !initialLoad ? (
+                        <div style={{ height: "30px" }}>{surnameError}</div>
+                      ) : (
+                        " "
+                      )
+                    }
+                  />
+                  <TextField
+                    label="Email"
+                    variant="outlined"
+                    fullWidth
+                    value={email}
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                      setInitialLoad(false);
+                    }}
+                    error={!!emailError && !initialLoad}
+                    helperText={
+                      !initialLoad ? (
+                        <div style={{ height: "30px" }}>{emailError}</div>
+                      ) : (
+                        " "
+                      )
+                    }
+                  />
+                  <TextField
+                    label="Password"
+                    variant="outlined"
+                    type="password"
+                    fullWidth
+                    value={password}
+                    onChange={(e) => {
+                      setPassword(e.target.value);
+                      setInitialLoad(false);
+                    }}
+                    error={!!passwordError && !initialLoad}
+                    helperText={
+                      !initialLoad ? (
+                        !!passwordError ? (
+                          <div style={{ height: "70px" }}>{passwordError}</div>
+                        ) : (
+                          " "
+                        )
+                      ) : (
+                        " "
+                      )
+                    }
+                  />
+                  <TextField
+                    label="RepeatPassword"
+                    variant="outlined"
+                    type="password"
+                    fullWidth
+                    value={repeatPassword}
+                    onChange={(e) => {
+                      setRepeatPassword(e.target.value);
+                      setInitialLoad(false);
+                    }}
+                    error={!!repeatPasswordError && !initialLoad}
+                    helperText={
+                      !initialLoad ? (
+                        <div style={{ height: "0px" }}>
+                          {repeatPasswordError}
+                        </div>
+                      ) : (
+                        " "
+                      )
+                    }
+                  />
+                  {registerError && (
+                    <Grid item xs={12}>
+                      <p style={{ color: "red" }}>{registerError}</p>
+                    </Grid>
+                  )}
+                  <Grid item xs={12}>
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Button
+                        onClick={handleRegister}
+                        fullWidth
+                        variant="contained"
+                        sx={{ mt: 3, mb: 2 }}
+                      >
+                        Sign Up
+                      </Button>
+
+                      <div>
+                        <Link href="/login">Alrady a user? Log in.</Link>
+                      </div>
+                    </div>
+                  </Grid>
+                </Box>
+              </Box>
+            </Grid>
+          </Grid>
+        </Box>
+      </Container>
+    </div>
   );
 };
 

@@ -1,8 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { TextField, Button, Grid } from "@mui/material";
+import {
+  TextField,
+  Button,
+  Grid,
+  Paper,
+  CssBaseline,
+  Box,
+  Typography,
+  Container,
+  Link,
+} from "@mui/material";
 import axios from "axios";
 import { string } from "yup";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import LoggerImage from "../../utils/images/Logger.png";
 
 const Login: React.FC = (): JSX.Element => {
   const [email, setEmail] = useState<string>("");
@@ -16,6 +27,7 @@ const Login: React.FC = (): JSX.Element => {
   const [loginError, setLoginError] = useState<string | null>(null);
 
   const emailSchema = string().email().required();
+  document.body.style.backgroundColor = "#009696";
 
   useEffect(() => {
     const validateEmail = async () => {
@@ -31,7 +43,7 @@ const Login: React.FC = (): JSX.Element => {
   }, [email, emailSchema]);
 
   useEffect(() => {
-    const validateOnceMore = () => {
+    const validatePassword = () => {
       const regex =
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!#%])[A-Za-z0-9!#%]{8,32}$/;
       console.log(regex.test(password));
@@ -44,7 +56,7 @@ const Login: React.FC = (): JSX.Element => {
         );
       }
     };
-    validateOnceMore();
+    validatePassword();
   }, [password]);
 
   const handleLogin = async () => {
@@ -72,55 +84,120 @@ const Login: React.FC = (): JSX.Element => {
   };
 
   return (
-    <Grid container spacing={2}>
-      <Grid item xs={12}>
-        <TextField
-          label="Email"
-          variant="outlined"
-          fullWidth
-          value={email}
-          onChange={(e) => {
-            setEmail(e.target.value);
-            setInitialLoad(false);
+    <div
+      style={{
+        backgroundColor: "#009696",
+      }}
+    >
+      <Container component="main" maxWidth="lg">
+        <Box
+          sx={{
+            marginTop: 8,
+            marginBottom: 0,
           }}
-          error={!!emailError && !initialLoad}
-          helperText={!initialLoad ? emailError : " "}
-        />
-      </Grid>
-      <Grid item xs={12}>
-        <TextField
-          label="Password"
-          variant="outlined"
-          type="password"
-          fullWidth
-          value={password}
-          onChange={(e) => {
-            setPassword(e.target.value);
-            setInitialLoad(false);
-          }}
-          error={!!passwordError && !initialLoad}
-          helperText={!initialLoad ? passwordError : " "}
-        />
-      </Grid>
-      {loginError && (
-        <Grid item xs={12}>
-          <p style={{ color: "red" }}>{loginError}</p>
-        </Grid>
-      )}
+        >
+          <Grid container>
+            <CssBaseline />
+            <Grid
+              item
+              xs={false}
+              sm={4}
+              md={7}
+              sx={{
+                backgroundImage: `url(${LoggerImage})`,
+                backgroundRepeat: "no-repeat",
+                backgroundColor: (t) =>
+                  t.palette.mode === "light"
+                    ? t.palette.grey[50]
+                    : t.palette.grey[900],
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+              }}
+            />
+            <Grid
+              item
+              xs={12}
+              sm={8}
+              md={5}
+              component={Paper}
+              elevation={6}
+              square
+            >
+              <Box
+                sx={{
+                  my: 8,
+                  mx: 4,
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
+                <Typography component="h1" variant="h5">
+                  Sign in
+                </Typography>
+                <Box component="form" sx={{ mt: 1 }}>
+                  <TextField
+                    label="Email"
+                    variant="outlined"
+                    fullWidth
+                    value={email}
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                      setInitialLoad(false);
+                    }}
+                    error={!!emailError && !initialLoad}
+                    helperText={!initialLoad ? emailError : " "}
+                  />
+                  <TextField
+                    label="Password"
+                    variant="outlined"
+                    type="password"
+                    fullWidth
+                    value={password}
+                    onChange={(e) => {
+                      setPassword(e.target.value);
+                      setInitialLoad(false);
+                    }}
+                    error={!!passwordError && !initialLoad}
+                    helperText={!initialLoad ? passwordError : " "}
+                  />
 
-      <Grid item xs={12}>
-        <div style={{ display: "flex", gap: "16px" }}>
-          <Button variant="contained" color="primary" onClick={handleLogin}>
-            Login
-          </Button>
-          <Link to="/register">
-            <Button variant="contained" color="primary">
-              Register
-            </Button>
-          </Link>
-        </div>
-      </Grid>
-    </Grid>
+                  {loginError && (
+                    <Grid item xs={12}>
+                      <p style={{ color: "red" }}>{loginError}</p>
+                    </Grid>
+                  )}
+                  <Grid item xs={12}>
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Button
+                        onClick={handleLogin}
+                        fullWidth
+                        variant="contained"
+                        sx={{ mt: 3, mb: 2 }}
+                      >
+                        Log In
+                      </Button>
+
+                      <div>
+                        <Link href="/register">
+                          Don't hav an account? Sign up.
+                        </Link>
+                      </div>
+                    </div>
+                  </Grid>
+                </Box>
+              </Box>
+            </Grid>
+          </Grid>
+        </Box>
+      </Container>
+    </div>
   );
 };
 
