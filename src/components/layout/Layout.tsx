@@ -27,7 +27,7 @@ const Layout: React.FC<ChildrenNode> = ({ children }) => {
           <Sidebar />
         </div>
         <div className={styles.contentWrapper}>
-          <h3>{title}</h3>
+          <div className={styles.titleWrapper}>{title}</div>
           <div> {children}</div>
         </div>
       </div>

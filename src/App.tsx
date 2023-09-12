@@ -4,6 +4,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import Layout from "./components/layout/Layout";
+import Contracts from "./pages/Contracts/Contracts";
 
 const NotLoggedInRoutes = () => {
   return (
@@ -19,7 +20,7 @@ const LoggedInRoutes = () => {
   return (
     <Layout>
       <Routes>
-        <Route path="contracts" element={<div>Contracts</div>} />
+        <Route path="contracts" element={<Contracts />} />
         <Route path="logs" element={<div>Logs</div>} />
         <Route path="invoices" element={<div>Invoices</div>} />
         <Route path="companies" element={<div>Companies</div>} />
