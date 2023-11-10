@@ -26,7 +26,7 @@ html {
 }
 
 .contentWrapper {
-  padding: 12px;
+  padding: 32px;
   width: 100%;
   background-color: white;
 }
@@ -36,4 +36,5 @@ html {
   font-weight: 700;
   color: #355e76;
   font-size: xx-large;
+  margin-bottom: 24px;
 }

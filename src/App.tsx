@@ -6,6 +6,8 @@ import Register from "./pages/Register/Register";
 import Layout from "./components/layout/Layout";
 import Contracts from "./pages/Contracts/Contracts";
 
+import "react-datepicker/dist/react-datepicker.css";
+
 const NotLoggedInRoutes = () => {
   return (
     <Routes>

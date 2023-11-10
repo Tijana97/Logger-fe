@@ -1,0 +1,15 @@
+.indicatorActiveStyle {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: green;
+  box-shadow: 0 0 7px green;
+}
+
+.indicatorInactiveStyle {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: red;
+  box-shadow: 0 0 7px red;
+}

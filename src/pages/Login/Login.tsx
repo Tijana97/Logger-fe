@@ -75,7 +75,7 @@ const Login: React.FC = (): JSX.Element => {
         axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
         localStorage.setItem("token", response.data.token);
         console.log(response.data.token);
-        navigate("/home");
+        navigate("/contracts");
       } catch (error: any) {
         console.error("Login failed:", error);
         setLoginError("Login failed. Username or password are incorrect.");
